@@ -2,41 +2,57 @@ package com.example.demo.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.demo.entity.User;
+import com.example.demo.entity.test;
 import com.example.demo.mapper.UserMapper;
+import com.example.demo.tools.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.mapper.UserMapper;
+
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 public class UserController {
     @Autowired
     private UserMapper userMapper;
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public ResponseEntity<String> login(@RequestParam String username,String password) {
+        public ResponseEntity<Object> login(@RequestBody User loginUser) {
+        String username = loginUser.getUsername();
+        String password = loginUser.getPassword();
         System.out.println(username);
         System.out.println(password);
-        User loginUser = new User();
-        loginUser.setUsername(username);
-        loginUser.setPassword(password);
+//        User loginUser = new User();
+//        loginUser.setUsername(username);
+//        loginUser.setPassword(password);
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", loginUser.getUsername());
         User storedUser =  userMapper.selectOne(queryWrapper);
         if (storedUser != null && storedUser.getPassword().equals(loginUser.getPassword())) {
-            return ResponseEntity.ok("登录成功！");
+//            String token = JwtTokenProvider.generateToken(storedUser.getUser_id(), storedUser.getUsername(), storedUser.getRole());
+            Map<String, Object> userDataMap = new HashMap<>();
+            userDataMap.put("userId", storedUser.getUser_id());
+            userDataMap.put("username", storedUser.getUsername());
+            userDataMap.put("role", storedUser.getRole());
+            userDataMap.put("status", 1);
+            userDataMap.put("message", "success");
+            return ResponseEntity.ok(userDataMap);
         } else {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("用户名或密码错误");
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("wrong password");
         }
+//        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("wrong password");
     }
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ResponseEntity<String> register(@RequestParam String username,String password) {
+    public ResponseEntity<String> register(@RequestBody User user) {
+        String username = user.getUsername();
+        String password = user.getPassword();
         System.out.println(username);
         System.out.println(password);
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
+
         boolean  res = userMapper.insert(user) > 0;
 
         if (res) {

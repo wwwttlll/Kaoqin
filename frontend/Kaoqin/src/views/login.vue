@@ -33,6 +33,7 @@ import { ElMessage } from 'element-plus'
 import { login } from '@/apis/login'
 import { useUserStore } from '../stores/stores.js'
 import pinia from '../stores/index.js'
+import * as jwt from "jwt-decode";
 const user = useUserStore(pinia)
 import { storeToRefs } from 'pinia'
 
@@ -65,24 +66,23 @@ export default {
             }
 
             try {
+                // console.log(data)
                 const response = await login(data)
                 // 获取响应结果
                 const res = response.data
                 console.log(res)
                 if (res.status) {
-                    let token = res.token
-                    // console.log(token)
-                    const decoded = jwtDecode(token)
-                    // console.log(decoded)
+                    // const userData = response.data;
+                    // console.log(JSON.parse(decoded))
                     const isConfirm = confirm('登录成功,确认后跳转首页?')
-
+                    // console.log(decoded)
                     if (isConfirm) {
-                        handleLoginSuccess(decoded.user_id, decoded.user_uid, decoded.username)
+                        handleLoginSuccess(response.data.user_id, response.data.username, response.data.role)
                         console.log(user.isLoggedIn)
                         this.$router.push('/')
                     } // 登录成功后跳转首页
                 } else {
-                    if (res.message.password == "密码格式错误") {
+                    if (res.message == "密码格式错误") {
                         err_reflect("密码格式错误")
                     } else if (res.message == "wrong password") {
                         err_reflect("用户名或密码错误")

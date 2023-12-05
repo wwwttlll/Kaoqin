@@ -3,7 +3,7 @@ import httpInstance from '@/utils/http.js'
 
 export function login(data) {
   return httpInstance({
-    url: '/login', 
+    url: '/login',
     method: 'post',
     data
   })
