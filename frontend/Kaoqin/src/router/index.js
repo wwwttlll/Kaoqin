@@ -2,7 +2,12 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/homeview/homeview.vue'
 import Login from "@/views/Login.vue"
 import ForgetPassword from "@/views/ForgetPassword.vue"
-import Register from "@/views/register.vue"
+import Register from "@/views/Register.vue"
+import UserView from "@/views/UserView.vue"
+import Supplement from "@/views/Supplement.vue"
+import Leave from "@/views/Leave.vue"
+import Record from "@/views/Record.vue"
+import Statistics from "@/views/Statistics.vue"
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -37,6 +42,31 @@ const router = createRouter({
       meta: {
         keepAlive: false
       }
+    },
+    {
+      path: '/user-view',
+      name: 'user-view',
+      component: UserView,
+    },
+    {
+      path: '/attendance-management/supplement',
+      name: 'supplement',
+      component: Supplement,
+    },
+    {
+      path: '/attendance-management/leave',
+      name: 'leave',
+      component: Leave,
+    },
+    {
+      path: '/attendance-management/record',
+      name: 'record',
+      component: Record,
+    },
+    {
+      path: '/attendance-management/statistics',
+      name: 'statistics',
+      component: Statistics,
     },
     // {
     //   path: '/about',

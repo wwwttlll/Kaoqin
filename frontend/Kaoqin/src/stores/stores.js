@@ -3,8 +3,9 @@ export const useUserStore = defineStore('user', {
   state: () => {
     return {
       isLoggedIn: false,
-      userid: '',
-      username: ''
+      userid: -1,
+      username: '',
+      userrole: 0,
     }
   }
 })

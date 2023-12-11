@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.mapper.UserMapper;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -61,5 +63,42 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("注册失败，请重试。");
         }
     }
+    @RequestMapping(value = "/selectuserbyusername", method = RequestMethod.GET)
+    public ResponseEntity<Object> selectUserByUsername(@RequestParam String username){
+
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("username", username);
+        List<User> res  = userMapper.selectList(queryWrapper);
+        if(res.size() > 0){
+            return ResponseEntity.ok(res);
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
+    @RequestMapping(value = "/selectuserbyphone", method = RequestMethod.GET)
+    public ResponseEntity<Object> selectUserByPhone(@RequestParam String phone){
+
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("phone_number", phone);
+        List<User> res  = userMapper.selectList(queryWrapper);
+        if(res.size() > 0){
+            return ResponseEntity.ok(res);
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
+    @RequestMapping(value = "/selectuserbyemail", method = RequestMethod.GET)
+    public ResponseEntity<Object> selectUserByEmail(@RequestParam String email){
+
+        QueryWrapper<User> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("email", email);
+        List<User> res  = userMapper.selectList(queryWrapper);
+        if(res.size() > 0){
+            return ResponseEntity.ok(res);
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
+        }
+    }
+
 }
 
