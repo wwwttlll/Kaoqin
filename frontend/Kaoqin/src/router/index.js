@@ -47,26 +47,41 @@ const router = createRouter({
       path: '/user-view',
       name: 'user-view',
       component: UserView,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/attendance-management/supplement',
       name: 'supplement',
       component: Supplement,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/attendance-management/leave',
       name: 'leave',
       component: Leave,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/attendance-management/record',
       name: 'record',
       component: Record,
+      meta: {
+        keepAlive: true
+      }
     },
     {
       path: '/attendance-management/statistics',
       name: 'statistics',
       component: Statistics,
+      meta: {
+        keepAlive: true
+      }
     },
     // {
     //   path: '/about',

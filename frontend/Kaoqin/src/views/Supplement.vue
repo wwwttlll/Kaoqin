@@ -25,9 +25,9 @@ const form = ref({
 });
 
 const submitCheckin = () => {
-    // 发送补签信息到后端API
+    
     console.log('提交补签信息', form.value);
-    // 你需要使用实际的API请求来提交数据
+    
 };
 </script>
   

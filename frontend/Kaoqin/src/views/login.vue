@@ -21,6 +21,7 @@
                 </el-col>
             </el-row>
 
+
             <el-button @click="onLogin" class="login-btn" type="primary" round>Login</el-button>
         </el-form>
 
@@ -36,28 +37,27 @@ import pinia from '../stores/index.js'
 import * as jwt from "jwt-decode";
 const user = useUserStore(pinia)
 import { storeToRefs } from 'pinia'
-
-function handleLoginSuccess(user_id, user_uid, username) {
+function handleLoginSuccess(user_id, username, role) {
     user.isLoggedIn = true
-    user.id = user_id
-    user.uid = user_uid
+    user.userid = user_id
     user.username = username
+    user.userrole = role
 }
 export default {
 
     methods: {
-
 
         onLoginFailed() {
             alert('登录失败,请重试')
         },
 
         async onLogin() {
+            console.log('Button clicked');
             const data = {
                 username: this.username,
                 password: this.password
-            }
-
+            };
+            // console.log(data)
             function err_reflect(mes) {
                 ElMessage({
                     message: mes,
@@ -66,7 +66,7 @@ export default {
             }
 
             try {
-                // console.log(data)
+                console.log(data)
                 const response = await login(data)
                 // 获取响应结果
                 const res = response.data
@@ -75,10 +75,11 @@ export default {
                     // const userData = response.data;
                     // console.log(JSON.parse(decoded))
                     const isConfirm = confirm('登录成功,确认后跳转首页?')
-                    // console.log(decoded)
+
                     if (isConfirm) {
                         handleLoginSuccess(response.data.user_id, response.data.username, response.data.role)
                         console.log(user.isLoggedIn)
+                    
                         this.$router.push('/')
                     } // 登录成功后跳转首页
                 } else {

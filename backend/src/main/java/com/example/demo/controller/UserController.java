@@ -37,7 +37,7 @@ public class UserController {
         if (storedUser != null && storedUser.getPassword().equals(loginUser.getPassword())) {
 //            String token = JwtTokenProvider.generateToken(storedUser.getUser_id(), storedUser.getUsername(), storedUser.getRole());
             Map<String, Object> userDataMap = new HashMap<>();
-            userDataMap.put("userId", storedUser.getUser_id());
+            userDataMap.put("userId", storedUser.getUserId());
             userDataMap.put("username", storedUser.getUsername());
             userDataMap.put("role", storedUser.getRole());
             userDataMap.put("status", 1);
@@ -63,9 +63,21 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("注册失败，请重试。");
         }
     }
-    @RequestMapping(value = "/selectuserbyusername", method = RequestMethod.GET)
-    public ResponseEntity<Object> selectUserByUsername(@RequestParam String username){
+    @RequestMapping(value = "/selectallusers", method = RequestMethod.POST)
+    public ResponseEntity<Object> selectAllUsers() {
+        List<User> allUsers = userMapper.selectList(new QueryWrapper<>());
 
+        if (!allUsers.isEmpty()) {
+            return ResponseEntity.ok(allUsers);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No users found");
+        }
+    }
+
+
+    @RequestMapping(value = "/selectuserbyusername", method = RequestMethod.POST)
+    public ResponseEntity<Object> selectUserByUsername(@RequestParam("username")  String username){
+        System.out.println(username);
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("username", username);
         List<User> res  = userMapper.selectList(queryWrapper);
@@ -75,7 +87,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
     }
-    @RequestMapping(value = "/selectuserbyphone", method = RequestMethod.GET)
+    @RequestMapping(value = "/selectuserbyphone", method = RequestMethod.POST)
     public ResponseEntity<Object> selectUserByPhone(@RequestParam String phone){
 
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
@@ -87,7 +99,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found");
         }
     }
-    @RequestMapping(value = "/selectuserbyemail", method = RequestMethod.GET)
+    @RequestMapping(value = "/selectuserbyemail", method = RequestMethod.POST)
     public ResponseEntity<Object> selectUserByEmail(@RequestParam String email){
 
         QueryWrapper<User> queryWrapper = new QueryWrapper<>();
