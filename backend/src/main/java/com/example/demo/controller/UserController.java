@@ -2,17 +2,14 @@ package com.example.demo.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.example.demo.entity.User;
-import com.example.demo.entity.test;
 import com.example.demo.mapper.UserMapper;
-import com.example.demo.tools.JwtTokenProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.mapper.UserMapper;
 
-import java.util.Date;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,7 +34,7 @@ public class UserController {
         if (storedUser != null && storedUser.getPassword().equals(loginUser.getPassword())) {
 //            String token = JwtTokenProvider.generateToken(storedUser.getUser_id(), storedUser.getUsername(), storedUser.getRole());
             Map<String, Object> userDataMap = new HashMap<>();
-            userDataMap.put("userId", storedUser.getUserId());
+            userDataMap.put("userId", storedUser.getUser_id());
             userDataMap.put("username", storedUser.getUsername());
             userDataMap.put("role", storedUser.getRole());
             userDataMap.put("status", 1);

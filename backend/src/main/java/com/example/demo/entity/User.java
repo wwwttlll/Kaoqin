@@ -6,20 +6,20 @@ import com.baomidou.mybatisplus.annotation.TableName;
 @TableName("user")
 public class User {
     @TableId
-    private Integer userId;
+    private Integer user_id;
     private String password;
     private String username;
     private Integer role;
-    private Double moneyPerHour;
-    private String phoneNumber;
+    private Double money_per_hour;
+    private String phone_number;
     private String email;
 
-    public Integer getUserId() {
-        return userId;
+    public Integer getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser_id(Integer user_id) {
+        this.user_id = user_id;
     }
 
     public String getPassword() {
@@ -46,20 +46,20 @@ public class User {
         this.role = role;
     }
 
-    public Double getMoneyPerHour() {
-        return moneyPerHour;
+    public Double getMoney_per_hour() {
+        return money_per_hour;
     }
 
-    public void setMoneyPerHour(Double moneyPerHour) {
-        this.moneyPerHour = moneyPerHour;
+    public void setMoney_per_hour(Double money_per_hour) {
+        this.money_per_hour = money_per_hour;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone_number() {
+        return phone_number;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone_number(String phone_number) {
+        this.phone_number = phone_number;
     }
 
     public String getEmail() {
