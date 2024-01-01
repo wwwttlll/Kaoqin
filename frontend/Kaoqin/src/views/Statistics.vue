@@ -1,78 +1,55 @@
 <template>
     <div>
-        <h2>用户列表</h2>
-        <ul>
-            <li v-for="user in userList" :key="user.id">
-                {{ user.name }}
-                <el-button type="text" @click="showDetails(user.id)">详情</el-button>
-                <el-button type="text" @click="showStatistics(user.id)">统计</el-button>
-            </li>
-        </ul>
+        <el-table :data="userList" style="width: 100%">
+            <el-table-column label="用户名" prop="username"></el-table-column>
+            <el-table-column label="本月考勤次数" prop="attendanceCount"></el-table-column>
+            <el-table-column label="操作">
+                <template v-slot="{ row }">
 
-        <!-- 详情小卡片 -->
-        <el-dialog v-if="detailDialogVisible" title="考勤详情" width="30%" @close="closeDialog('detailDialogVisible')">
-            <p>{{ selectedUserName }} 的考勤详情</p>
-            <el-calendar v-if="selectedUserId" :value="currentMonth" :dates="attendanceDates"
-                @select="handleDateSelect"></el-calendar>
-            <el-button @click="closeDialog('detailDialogVisible')">关闭</el-button>
-        </el-dialog>
+                    <el-button @click="navigateToTargetPage(row)">查看详情</el-button>
 
-        <!-- 统计柱形图 -->
-        <el-dialog v-if="statisticsDialogVisible" title="考勤统计" width="50%" @close="closeDialog('statisticsDialogVisible')">
-            <el-chart :data="statisticsData" type="bar" height="300px"></el-chart>
-            <el-button @click="closeDialog('statisticsDialogVisible')">关闭</el-button>
-        </el-dialog>
+                </template>
+            </el-table-column>
+        </el-table>
     </div>
 </template>
   
 <script setup>
 import { ref } from 'vue';
+import { useRouter } from "vue-router"
+
+const router = useRouter();
 
 const userList = ref([
-    { id: 1, name: 'User1' },
-    { id: 2, name: 'User2' },
+    {
+        userid: "1", username: 'User1', attendanceCount: 10, attendanceDetails: [
+            { date: '2023-01-01', status: '出勤' },
+            { date: '2023-01-02', status: '请假' },
+            // ... 其他日期和状态
+        ]
+    },
+    {
+        userid: "2", username: 'User2', attendanceCount: 15, attendanceDetails: [
+            { date: '2023-01-01', status: '出勤' },
+            { date: '2023-01-02', status: '请假' },
+            // ... 其他日期和状态
+        ]
+    },
+    // Add more users with attendance details...
 ]);
 
-const selectedUserId = ref(null);
-const selectedUserName = ref('');
-const detailDialogVisible = ref(true);
-const statisticsDialogVisible = ref(false);
 
-const showDetails = (userId) => {
-    console.log(userId);
-    selectedUserId.value = userId;
-    selectedUserName.value = userList.value.find(user => user.id === userId).name;
-    detailDialogVisible.value = true;
-};
 
-const showStatistics = (userId) => {
-    selectedUserId.value = userId;
-    selectedUserName.value = userList.value.find(user => user.id === userId).name;
-    statisticsDialogVisible.value = true;
-};
 
-const closeDialog = (dialogName) => {
-    // 关闭对话框
-    if (dialogName === 'detailDialogVisible') {
-        detailDialogVisible.value = false;
-    } else if (dialogName === 'statisticsDialogVisible') {
-        statisticsDialogVisible.value = false;
-    }
-};
 
-const statisticsData = ref({
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-    datasets: [
-        {
-            label: '成功打卡次数',
-            data: [5, 8, 15, 12, 7, 10, 6, 8, 12, 9, 11, 14],
-        },
-        // ... (more datasets for different statistics)
-    ],
-});
+
+const navigateToTargetPage = (user) => {
+
+    router.push({
+        path: '/attendance-management/statistics/user',
+        query: { userId: '123' }
+    })
+
+}
 </script>
-  
-<style scoped>
-/* 添加样式 */
-</style>
-  
+<style scope></style>

@@ -8,6 +8,7 @@ import Supplement from "@/views/Supplement.vue"
 import Leave from "@/views/Leave.vue"
 import Record from "@/views/Record.vue"
 import Statistics from "@/views/Statistics.vue"
+import userAttendance from "@/views/detail.vue"
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -79,6 +80,14 @@ const router = createRouter({
       path: '/attendance-management/statistics',
       name: 'statistics',
       component: Statistics,
+      meta: {
+        keepAlive: true
+      }
+    },
+    {
+      path: '/attendance-management/statistics/user/:userId',
+      name: 'userAttendance',
+      component: userAttendance,
       meta: {
         keepAlive: true
       }

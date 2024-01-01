@@ -86,7 +86,7 @@ const editUser = (user) => {
 };
 
 onMounted(async () => {
-    // 页面加载时默认查询所有用户
+
     const res = await selectallusers();
     users.value = res.data
     console.log(res);

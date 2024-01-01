@@ -1,19 +1,17 @@
 <template>
-    <!-- 左侧内容，你可以根据需要添加 -->
-    <el-row :gutter="20">
+    <el-row :gutter="20" class="header">
         <el-col :span="16">
             <div class="left-content">
-                面包屑
+                <span class="logo">考勤管理系统</span>
             </div>
         </el-col>
         <el-col :span="8">
             <div class="right-content" v-if="user.isLoggedIn">
-                <!-- 头像和下拉菜单 -->
                 <el-dropdown @command="handleCommand">
                     <el-avatar class="avatar">User</el-avatar>
                     <template #dropdown>
                         <el-dropdown-menu>
-                            <el-dropdown-item command=" profile">
+                            <el-dropdown-item command="profile">
                                 个人信息
                             </el-dropdown-item>
                             <el-dropdown-item command="logout">
@@ -21,12 +19,10 @@
                             </el-dropdown-item>
                         </el-dropdown-menu>
                     </template>
-
                 </el-dropdown>
             </div>
             <div class="right-content" v-else>
-                <!-- 头像和下拉菜单 -->
-                <router-link to="/">home</router-link>
+                <router-link to="/">Home</router-link>
                 <router-link to="/login">Login</router-link>
                 <router-link to="/register">Register</router-link>
             </div>
@@ -78,28 +74,45 @@ const logout = () => {
 </script>
 
 <style scoped>
-/* .custom-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0;
+.header {
+    padding: 10px 0;
+    background-color: #1414ab;
     width: 100%;
+    /* 上下边距 */
 }
 
 .left-content {
-    display: flex;
-    align-items: center;
-    width: 80%;
+    color: #fff;
+    /* 左侧内容文字颜色 */
 }
 
 .right-content {
     display: flex;
     align-items: center;
-    width: 20%;
-} */
+    justify-content: flex-end;
+
+}
+
+.right-content router-link {
+    color: #fff;
+    margin-right: 10px;
+    /* 调整各个 router-link 之间的右边距 */
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+}
 
 .avatar {
-    cursor: pointer;
-    /* 鼠标悬停时显示手型 */
+    margin-right: 10px;
+    /* 调整头像与下拉菜单的间距 */
+}
+
+
+
+.el-dropdown-item {
+    color: #fff;
+    /* 下拉菜单文字颜色 */
 }
 </style>

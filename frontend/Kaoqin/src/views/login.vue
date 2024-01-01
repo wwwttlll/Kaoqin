@@ -57,7 +57,7 @@ export default {
                 username: this.username,
                 password: this.password
             };
-            // console.log(data)
+
             function err_reflect(mes) {
                 ElMessage({
                     message: mes,
@@ -101,7 +101,6 @@ export default {
     setup() {
         const username = ref('')
         const password = ref('')
-
         return {
             username,
             password

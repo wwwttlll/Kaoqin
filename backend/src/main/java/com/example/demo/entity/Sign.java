@@ -11,8 +11,17 @@ public class Sign {
     private Integer sign_id;
     private Date time;
     private Integer user_id;
-    private String type;
     private String status;
+
+    private String username;
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
+    }
 
     public Integer getSign_id() {
         return sign_id;
@@ -36,14 +45,6 @@ public class Sign {
 
     public void setUser_id(Integer user_id) {
         this.user_id = user_id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
     }
 
     public String getStatus() {

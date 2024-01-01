@@ -6,7 +6,7 @@ import Header from "@/components/Header.vue"
 <template>
   <div class="common-layout">
     <el-container v-if="$route.meta.keepAlive">
-      <el-aside width="400px">
+      <el-aside width="250px">
         <Menu />
       </el-aside>
       <el-container>
