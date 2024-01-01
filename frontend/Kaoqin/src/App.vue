@@ -2,11 +2,12 @@
 import { RouterLink, RouterView } from 'vue-router'
 import Menu from "@/components/Menu.vue"
 import Header from "@/components/Header.vue"
+import MenuUser from "@/components/menuUser.vue"
 </script>
 <template>
   <div class="common-layout">
-    <el-container v-if="$route.meta.keepAlive">
-      <el-aside width="250px">
+    <el-container v-if="$route.meta.menuType === 'manager'">
+      <el-aside width="250">
         <Menu />
       </el-aside>
       <el-container>
@@ -18,6 +19,21 @@ import Header from "@/components/Header.vue"
         </el-main>
       </el-container>
     </el-container>
+
+    <el-container v-else-if="$route.meta.menuType === 'user'">
+      <el-aside width="250">
+        <MenuUser />
+      </el-aside>
+      <el-container>
+        <el-header>
+          <Header />
+        </el-header>
+        <el-main>
+          <router-view></router-view>
+        </el-main>
+      </el-container>
+    </el-container>
+
     <router-view v-if="!$route.meta.keepAlive"></router-view>
   </div>
 </template>

@@ -9,6 +9,13 @@ import Leave from "@/views/Leave.vue"
 import Record from "@/views/Record.vue"
 import Statistics from "@/views/Statistics.vue"
 import userAttendance from "@/views/detail.vue"
+
+import HomeViewUser from '@/views/homeview/homeviewuser.vue'
+import AddApply from "@/views/AddApply.vue"
+import ApplyList from "@/views/ApplyList.vue"
+import SignData from "@/views/SignData.vue"
+import ChangeInfo from "@/views/ChangeInfo.vue"
+import UserHome from "@/views/UserHome.vue"
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -17,7 +24,8 @@ const router = createRouter({
       name: 'home',
       component: HomeView,
       meta: {
-        keepAlive: true
+        keepAlive: true,
+        menuType: 'manager'
       }
     },
     {
@@ -25,7 +33,8 @@ const router = createRouter({
       name: 'login',
       component: Login,
       meta: {
-        keepAlive: false
+        keepAlive: false,
+        menuType: false
       }
     },
     {
@@ -33,7 +42,8 @@ const router = createRouter({
       name: 'forget',
       component: ForgetPassword,
       meta: {
-        keepAlive: false
+        keepAlive: false,
+        menuType: false
       }
     },
     {
@@ -41,7 +51,8 @@ const router = createRouter({
       name: 'register',
       component: Register,
       meta: {
-        keepAlive: false
+        keepAlive: false,
+        menuType: false
       }
     },
     {
@@ -49,7 +60,8 @@ const router = createRouter({
       name: 'user-view',
       component: UserView,
       meta: {
-        keepAlive: true
+        keepAlive: true,
+        menuType: 'manager'
       }
     },
     {
@@ -57,7 +69,8 @@ const router = createRouter({
       name: 'supplement',
       component: Supplement,
       meta: {
-        keepAlive: true
+        keepAlive: true,
+        menuType: 'manager'
       }
     },
     {
@@ -65,7 +78,8 @@ const router = createRouter({
       name: 'leave',
       component: Leave,
       meta: {
-        keepAlive: true
+        keepAlive: true,
+        menuType: 'manager'
       }
     },
     {
@@ -73,7 +87,8 @@ const router = createRouter({
       name: 'record',
       component: Record,
       meta: {
-        keepAlive: true
+        keepAlive: true,
+        menuType: 'manager'
       }
     },
     {
@@ -81,7 +96,8 @@ const router = createRouter({
       name: 'statistics',
       component: Statistics,
       meta: {
-        keepAlive: true
+        keepAlive: true,
+        menuType: 'manager'
       }
     },
     {
@@ -89,9 +105,65 @@ const router = createRouter({
       name: 'userAttendance',
       component: userAttendance,
       meta: {
-        keepAlive: true
+        keepAlive: true,
+        menuType: 'manager'
       }
     },
+
+    {
+      path: '/home-view-user',
+      name: '用户首页',
+      component: HomeViewUser,
+      meta: {
+        keepAlive: true,
+        menuType: 'user'
+      }
+    },
+    {
+      path: '/Apply/AddApply',
+      name: '添加申请',
+      component: AddApply,
+      meta: {
+        keepAlive: true,
+        menuType: 'user'
+      }
+    },
+    {
+      path: '/Apply/ApplyList',
+      name: '所有请假申请',
+      component: ApplyList,
+      meta: {
+        keepAlive: true,
+        menuType: 'user'
+      }
+    },
+    {
+      path: '/SignData',
+      name: '上班打卡',
+      component: SignData,
+      meta: {
+        keepAlive: true,
+        menuType: 'user'
+      }
+    },
+    {
+      path: '/ChangeInfo',
+      name: '个人信息修改',
+      component: ChangeInfo,
+      meta: {
+        keepAlive: true,
+        menuType: 'user'
+      }
+    },
+    {
+      path: '/UserHome',
+      name: '用户主页',
+      component: UserHome,
+      meta: {
+        keepAlive: true,
+        menuType: 'user'
+      }
+    }
     // {
     //   path: '/about',
     //   name: 'about',

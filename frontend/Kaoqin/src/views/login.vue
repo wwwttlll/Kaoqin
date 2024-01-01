@@ -79,8 +79,11 @@ export default {
                     if (isConfirm) {
                         handleLoginSuccess(response.data.user_id, response.data.username, response.data.role)
                         console.log(user.isLoggedIn)
-                    
-                        this.$router.push('/')
+                        if (response.data.role === 0) {
+                            this.$router.push('/')
+                        } else if (response.data.role === 1) {
+                            this.$router.push('/home-view-user')
+                        }
                     } // 登录成功后跳转首页
                 } else {
                     if (res.message == "密码格式错误") {
