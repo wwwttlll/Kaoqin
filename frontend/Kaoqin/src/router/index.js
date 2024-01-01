@@ -85,7 +85,7 @@ const router = createRouter({
       }
     },
     {
-      path: '/attendance-management/statistics/user/:userId',
+      path: '/attendance-management/statistics/user',
       name: 'userAttendance',
       component: userAttendance,
       meta: {

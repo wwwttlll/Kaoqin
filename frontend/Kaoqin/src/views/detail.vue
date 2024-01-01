@@ -1,47 +1,61 @@
 <template>
-    <h2>User Attendance Details for {{ userId }}</h2>
-    <full-calendar :events="currentAttendance" :options="calendarOptions"></full-calendar>
+    <!-- <h1>{{ userId.value }}</h1> -->
+    <FullCalendar :options="calendarOptions" :events="eventSource" />
 </template>
-<script>
-import { ref, onMounted, watchEffect } from 'vue';
+<script setup>
+import { ref, onMounted, watchEffect, onActivated } from 'vue';
 
 import FullCalendar from '@fullcalendar/vue3';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { selectsignbyuserid } from "@/apis/sign";
-import { useRoute } from 'vue-router';
-const route = useRoute();
-const userId = ref(null);
+import { statisticsbyuser } from "@/apis/sign";
 
-watchEffect(() => {
-    console.log("111111");
-    // console.log(route.value);
-    // userId.value = route.query;
-    // console.log(userId.value);
-});
-const userList = ref(
-    {
-        username: 'User1', attendanceCount: 10, attendanceDetails: [
-            { date: '2023-01-01', status: '出勤' },
-            { date: '2023-01-02', status: '请假' },
-        ]
-    },
+import { useFilterStore } from '@/stores/stores'
+import pinia from '@/stores/index.js'
+const user = useFilterStore(pinia)
 
+const eventSource = ref([]);
+const currentAttendance = ref([])
+watchEffect(async () => {
+    const userid = new FormData();
+    userid.append("userid", user.userid);
+    const res = await statisticsbyuser(userid);
+    currentAttendance.value = res.data
+    console.log(currentAttendance.value);
+
+
+    const events = currentAttendance.value.map((sign) => ({
+        title: sign.status,
+        start: new Date(sign.time),
+    }));
+
+    // Update event source
+    eventSource.value = events;
+    console.log(eventSource.value);
+}
 );
 
+const handleEventContent = (arg) => {
+    const colors = {
+        '出勤': 'green',
+        '迟到': 'red',
+    };
+
+    return {
+        html: `<div style="color: ${colors[arg.event.title]};">${arg.event.title}</div>`,
+    };
+};
 
 const calendarOptions = {
-    plugins: [dayGridPlugin, interactionPlugin],
-    initialView: 'dayGridMonth ',
+    plugins: [dayGridPlugin],
+    initialView: 'dayGridMonth',
     headerToolbar: {
         left: 'prev,next today',
         center: 'title',
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
-    }
+    },
+    eventContent: handleEventContent,
 };
-const currentAttendance = ref([]);
-const showAttendanceDetails = () => {
-    currentAttendance.value = userList.attendanceDetails.value; // Set the attendance details for the current user
-    dialogVisible.value = true; // Show the dialog
-};
+
+
 </script>

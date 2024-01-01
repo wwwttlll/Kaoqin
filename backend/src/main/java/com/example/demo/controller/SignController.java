@@ -135,12 +135,24 @@ public class SignController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("补签失败，请重试。");
         }
     }
-    @RequestMapping(value = "/statistics", method = RequestMethod.POST)
-    public ResponseEntity<Object> statistics() {
+    @RequestMapping(value = "/signstatistics", method = RequestMethod.POST)
+    public ResponseEntity<Object> signstatistics() {
 
         Sign sign = new Sign();
         List<SignMapper.AttendanceResult> res = signMapper.calculateAttendance();
 
+        if (res.size() > 0) {
+            return ResponseEntity.ok(res);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("没有查找到数据");
+        }
+    }
+    @RequestMapping(value = "/statisticsbyuser", method = RequestMethod.POST)
+    public ResponseEntity<Object> statisticsbyuser(@RequestParam(required = true) String userid) {
+        System.out.println(userid);
+        QueryWrapper<Sign> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("user_id", userid);
+        List<Sign> res = signMapper.selectList(queryWrapper);
         if (res.size() > 0) {
             return ResponseEntity.ok(res);
         } else {

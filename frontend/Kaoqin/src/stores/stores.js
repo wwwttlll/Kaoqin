@@ -9,3 +9,8 @@ export const useUserStore = defineStore('user', {
     }
   }
 })
+export const useFilterStore = defineStore('filter', {
+  state: () => ({
+    userid:""
+  })
+})

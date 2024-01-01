@@ -2,7 +2,7 @@
     <div>
         <el-table :data="userList" style="width: 100%">
             <el-table-column label="用户名" prop="username"></el-table-column>
-            <el-table-column label="本月考勤次数" prop="attendanceCount"></el-table-column>
+            <el-table-column label="本月考勤次数" prop="attendance_count"></el-table-column>
             <el-table-column label="操作">
                 <template v-slot="{ row }">
 
@@ -15,39 +15,39 @@
 </template>
   
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from "vue-router"
-
+import { signstatistics } from "@/apis/sign"
 const router = useRouter();
+
+import { useFilterStore } from '@/stores/stores'
+import pinia from '@/stores/index.js'
+const User = useFilterStore(pinia)
 
 const userList = ref([
     {
-        userid: "1", username: 'User1', attendanceCount: 10, attendanceDetails: [
-            { date: '2023-01-01', status: '出勤' },
-            { date: '2023-01-02', status: '请假' },
-            // ... 其他日期和状态
-        ]
+        user_id: "1", username: 'User1', attendance_count: 10
     },
     {
-        userid: "2", username: 'User2', attendanceCount: 15, attendanceDetails: [
-            { date: '2023-01-01', status: '出勤' },
-            { date: '2023-01-02', status: '请假' },
-            // ... 其他日期和状态
-        ]
+        user_id: "2", username: 'User2', attendance_count: 15
     },
     // Add more users with attendance details...
 ]);
 
 
 
-
+onMounted(async () => {
+    const res = await signstatistics();
+    console.log(res);
+    userList.value = res.data;
+})
 
 
 const navigateToTargetPage = (user) => {
-
+    User.userid = user.user_id
     router.push({
         path: '/attendance-management/statistics/user',
-        query: { userId: '123' }
+        
     })
 
 }

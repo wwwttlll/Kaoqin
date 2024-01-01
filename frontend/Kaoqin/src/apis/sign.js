@@ -27,3 +27,17 @@ export function supplement(data) {
         data
     })
 }
+export function signstatistics() {
+    return httpInstance({
+        url: '/signstatistics',
+        method: 'post',
+        
+    })
+}
+export function statisticsbyuser(data) {
+    return httpInstance({
+        url: '/statisticsbyuser',
+        method: 'post',
+        data
+    })
+}
